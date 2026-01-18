@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: raw_data  # This matches the first part of your source() call
+    schema: raw     # This is the actual schema name in your Postgres DB
+    tables:
+      - name: telegram_messages
