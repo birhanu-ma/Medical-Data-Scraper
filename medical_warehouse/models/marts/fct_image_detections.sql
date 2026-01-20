@@ -1,15 +1,27 @@
-{{ config(materialized='table') }}
+{{ config(materialized='table', schema='analytics') }}
 
 WITH raw_detections AS (
-    -- Assuming you loaded the CSV to a table named 'image_analysis'
-    SELECT * FROM {{ source('raw_data', 'image_analysis') }}
+    -- Use 'raw_data' if you followed Option 1 above
+    SELECT 
+        message_id,
+        image_category,
+        detected_objects,
+        confidence_score
+    FROM {{ source('raw_data', 'image_analysis') }}
 ),
 
 messages AS (
-    SELECT * FROM {{ ref('fct_messages') }}
+    SELECT 
+        message_id,
+        channel_key,
+        date_key,
+        view_count 
+    FROM {{ ref('fct_messages') }}
 )
 
 SELECT
+    -- Simple unique ID
+    md5(cast(m.message_id as text) || d.image_category) as detection_pk,
     m.message_id,
     m.channel_key,
     m.date_key,
