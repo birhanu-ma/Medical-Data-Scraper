@@ -6,13 +6,13 @@ import sys
 import os
 # 1. Dynamically find the project root (Medical-Data-Scraper)
 # This goes up one level from src/ to the root
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '.'))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 # 2. Add the project root to sys.path so 'api' can be found
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 # 3. Now this import will work
-from api.database import get_db_engine
+from app.api.database import get_db_engine
 
 class TelegramDataLoader:
     def __init__(self):
@@ -66,4 +66,4 @@ class TelegramDataLoader:
 if __name__ == "__main__":
     # Example usage
     loader = TelegramDataLoader()
-    loader.run_pipeline("../data/raw/telegram_messages", "telegram_messages")
+    loader.run_pipeline("../data/raw/telegram_messages", "fct_messages")
