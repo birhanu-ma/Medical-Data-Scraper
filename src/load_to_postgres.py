@@ -52,7 +52,7 @@ class TelegramDataLoader:
                 table_name, 
                 con=self.engine, 
                 schema=schema, 
-                if_exists='replace', 
+                if_exists='append', 
                 index=False
             )
             print(f"Successfully loaded {len(df)} records into {schema}.{table_name}")
